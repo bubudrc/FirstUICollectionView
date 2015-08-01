@@ -11,6 +11,8 @@ import UIKit
 let reuseIdentifier = "Cell"
 
 class FirstCollectionViewController: UICollectionViewController {
+    
+    var colorArray = [UIColor]()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -20,13 +22,19 @@ class FirstCollectionViewController: UICollectionViewController {
 
         // Register cell classes
         self.collectionView!.registerClass(UICollectionViewCell.self, forCellWithReuseIdentifier: reuseIdentifier)
+        
+
+        for var i = 0; i < 100; i++ {
+            
+            //drand48 define un valor entre 0 y 1
+            var randomRed:CGFloat = CGFloat(drand48())
+            var randomGreen:CGFloat = CGFloat(drand48())
+            var randomBlue:CGFloat = CGFloat(drand48())
+            
+            colorArray.append(UIColor(red: randomRed, green: randomGreen, blue: randomBlue, alpha: 1.0))
+        }
 
         // Do any additional setup after loading the view.
-    }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
     }
 
     /*
@@ -42,20 +50,19 @@ class FirstCollectionViewController: UICollectionViewController {
     // MARK: UICollectionViewDataSource
 
     override func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
-        //#warning Incomplete method implementation -- Return the number of sections
-        return 0
+        return 1
     }
 
 
     override func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        //#warning Incomplete method implementation -- Return the number of items in the section
-        return 0
+        return colorArray.count
     }
 
     override func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCellWithReuseIdentifier(reuseIdentifier, forIndexPath: indexPath) as! UICollectionViewCell
     
         // Configure the cell
+        cell.backgroundColor = colorArray[indexPath.item]
     
         return cell
     }
